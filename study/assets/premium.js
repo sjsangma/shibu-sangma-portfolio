@@ -166,7 +166,8 @@
     { text: "PYTHON", color: "#a855f7" },
     { text: "EXCEL", color: "#22d3ee" },
     { text: "POWER BI", color: "#f472b6" },
-    { text: "STATISTICS", color: "#818cf8" }
+    { text: "STATISTICS", color: "#818cf8" },
+    { text: "DATA VIZ", color: "#34d399" }
   ];
 
   function labelTexture(text, color) {
@@ -188,9 +189,81 @@
     return tex;
   }
 
+  function faceTexture(text, color) {
+    const cv = document.createElement("canvas");
+    cv.width = 512; cv.height = 512;
+    const g = cv.getContext("2d");
+    const grad = g.createLinearGradient(0, 0, 512, 512);
+    grad.addColorStop(0, "rgba(14, 34, 60, .96)");
+    grad.addColorStop(0.55, "rgba(9, 23, 42, .94)");
+    grad.addColorStop(1, "rgba(18, 30, 62, .96)");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 512, 512);
+
+    /* faint data grid */
+    g.strokeStyle = "rgba(120, 190, 255, .10)";
+    g.lineWidth = 1;
+    for (let i = 40; i < 512; i += 48) {
+      g.beginPath(); g.moveTo(i, 0); g.lineTo(i, 512); g.stroke();
+      g.beginPath(); g.moveTo(0, i); g.lineTo(512, i); g.stroke();
+    }
+
+    /* neon frame */
+    g.strokeStyle = color;
+    g.globalAlpha = 0.9;
+    g.lineWidth = 6;
+    g.strokeRect(14, 14, 484, 484);
+    g.globalAlpha = 0.35;
+    g.lineWidth = 2;
+    g.strokeRect(30, 30, 452, 452);
+    g.globalAlpha = 1;
+
+    /* corner brackets */
+    const bracket = (x, y, dx, dy) => {
+      g.beginPath();
+      g.moveTo(x, y + dy * 46);
+      g.lineTo(x, y);
+      g.lineTo(x + dx * 46, y);
+      g.stroke();
+    };
+    g.strokeStyle = color;
+    g.lineWidth = 8;
+    bracket(40, 40, 1, 1); bracket(472, 40, -1, 1);
+    bracket(40, 472, 1, -1); bracket(472, 472, -1, -1);
+
+    /* glyph */
+    g.globalAlpha = 0.16;
+    g.fillStyle = color;
+    g.beginPath(); g.arc(256, 196, 74, 0, Math.PI * 2); g.fill();
+    g.globalAlpha = 1;
+
+    /* label */
+    const lines = String(text).split(" ");
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    g.fillStyle = "#f4f8ff";
+    const size = lines.length > 1 ? (text.length > 9 ? 46 : 54) : (text.length > 8 ? 44 : 58);
+    g.font = "700 " + size + "px Inter, Arial, sans-serif";
+    lines.forEach((ln, i) => {
+      const y = 296 + (i - (lines.length - 1) / 2) * (size + 8);
+      g.fillText(ln, 256, y);
+    });
+
+    /* accent underline */
+    g.strokeStyle = color;
+    g.lineWidth = 5;
+    g.beginPath();
+    g.moveTo(186, 396); g.lineTo(326, 396);
+    g.stroke();
+
+    const tex = new THREE.CanvasTexture(cv);
+    tex.anisotropy = 8;
+    return tex;
+  }
+
   function fallback(host) {
     host.innerHTML = '<div class="hero-fallback-cube"><span>SQL</span><span>PYTHON</span><span>EXCEL</span>' +
-      '<span>POWER BI</span><span>STATISTICS</span><span>DATA</span></div>';
+      '<span>POWER BI</span><span>STATISTICS</span><span>DATA VIZ</span></div>';
   }
 
   window.Premium = window.Premium || {};
@@ -225,15 +298,37 @@
     const l3 = new THREE.DirectionalLight(0xffffff, 1.1); l3.position.set(0, 4, 6);
     scene.add(l1, l2, l3);
 
-    /* central data object */
+    /* central holographic data cube — six labelled faces */
     const core = new THREE.Group();
-    const solidMat = new THREE.MeshStandardMaterial({ color: 0xdbe8ff, metalness: 0.92, roughness: 0.22, emissive: 0x0d1c34, emissiveIntensity: 0.8 });
-    const inner = new THREE.Mesh(new THREE.IcosahedronGeometry(0.62, 0), solidMat);
-    const wireMat = new THREE.MeshBasicMaterial({ color: 0x3f7fe0, wireframe: true, transparent: true, opacity: 0.55 });
-    const shell = new THREE.Mesh(new THREE.IcosahedronGeometry(1.06, 1), wireMat);
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.35 });
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.06, 1)), edgeMat);
-    core.add(inner, shell, edges);
+    const S = 1.34;
+    const cubeMats = LABELS.map((item) => new THREE.MeshStandardMaterial({
+      map: faceTexture(item.text, item.color),
+      transparent: true,
+      opacity: 0.94,
+      metalness: 0.28,
+      roughness: 0.32,
+      emissive: new THREE.Color(item.color),
+      emissiveIntensity: 0.10,
+      side: THREE.DoubleSide
+    }));
+    const cubeMesh = new THREE.Mesh(new THREE.BoxGeometry(S, S, S), cubeMats);
+    cubeMesh.rotation.set(-0.06, 0.5, 0.02);
+
+    const cubeEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(S, S, S)),
+      new THREE.LineBasicMaterial({ color: 0x7fe6ff, transparent: true, opacity: 0.9 })
+    );
+    cubeMesh.add(cubeEdges);
+
+    const glassShell = new THREE.Mesh(
+      new THREE.BoxGeometry(S * 1.14, S * 1.14, S * 1.14),
+      new THREE.MeshBasicMaterial({ color: 0x2f8fd8, wireframe: true, transparent: true, opacity: 0.22 })
+    );
+    const glowShell = new THREE.Mesh(
+      new THREE.BoxGeometry(S * 1.3, S * 1.3, S * 1.3),
+      new THREE.MeshBasicMaterial({ color: 0x9364ff, wireframe: true, transparent: true, opacity: 0.10 })
+    );
+    core.add(cubeMesh, glassShell, glowShell);
     world.add(core);
 
     /* progress ring */
@@ -330,12 +425,18 @@
       pointer.x += (pointer.tx - pointer.x) * 0.06;
       pointer.y += (pointer.ty - pointer.y) * 0.06;
 
-      world.rotation.y += dt * 0.18;
-      world.rotation.x = Math.sin(t * 0.3) * 0.06;
-      core.rotation.y -= dt * 0.42;
-      core.rotation.x += dt * 0.16;
-      inner.rotation.y += dt * 0.6;
-      shell.rotation.z += dt * 0.1;
+      world.rotation.y += dt * 0.10;
+      world.rotation.x = Math.sin(t * 0.3) * 0.05;
+
+      cubeMesh.rotation.y += dt * 0.30;
+      cubeMesh.rotation.x = Math.sin(t * 0.42) * 0.09 + pointer.y * 0.26;
+      cubeMesh.rotation.z = -pointer.x * 0.10;
+      glassShell.rotation.y -= dt * 0.16;
+      glassShell.rotation.x += dt * 0.05;
+      glowShell.rotation.y += dt * 0.09;
+      glowShell.rotation.z -= dt * 0.04;
+      core.position.y = Math.sin(t * 0.7) * 0.06;
+
       points.rotation.y += dt * 0.03;
       ringGroup.rotation.z -= dt * 0.12;
 

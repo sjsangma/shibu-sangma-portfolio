@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="assets/styles.css?v=5" />
     <link rel="stylesheet" href="assets/fx3d.css?v=3" />
   <link rel="stylesheet" href="assets/premium.css?v=1" />
+  <link rel="stylesheet" href="assets/holo.css?v=1" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
 </head>
 <body>
@@ -16,10 +17,10 @@
   <!-- ============ SIDEBAR ============ -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <div class="brand-mark">DA</div>
+      <div class="brand-mark">SS</div>
       <div class="brand-text">
-        <strong class="brand-3d">Data Analyst</strong>
-        <span class="brand-3d">Academy</span>
+        <strong class="brand-3d">Shibu Sangma</strong>
+        <span class="brand-3d">Data Analyst Academy</span>
       </div>
     </div>
 
@@ -34,10 +35,10 @@
         <span class="ico">▶</span> Video Lessons
       </a>
       <a href="#sessions" class="nav-item" data-view="sessions">
-        <span class="ico">⏱</span> 20-Min Sessions
+        <span class="ico">⏱</span> Study Sessions
       </a>
       <a href="#interview" class="nav-item" data-view="interview">
-        <span class="ico">◈</span> Interview Prep
+        <span class="ico">◈</span> Interview Preparation
       </a>
       <a href="#quiz" class="nav-item" data-view="quiz">
         <span class="ico">✓</span> Quizzes
@@ -79,6 +80,11 @@
         <div class="search-results" id="searchResults"></div>
       </div>
       <div class="topbar-right">
+        <button class="icon-btn holo-notif" id="notifBtn" type="button" aria-label="Notifications" aria-expanded="false">◔<span class="notif-dot" id="notifDot" hidden></span></button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <h3>Study queue</h3>
+          <div id="notifList" class="notif-list"></div>
+        </div>
         <div class="pill" id="overallPill">0% complete</div>
         <div class="profile-chip" id="profileChip" title="Shibu Sangma">
           <span class="avatar" id="profileAvatar">SS</span>
@@ -91,25 +97,39 @@
 
       <!-- DASHBOARD -->
       <section class="view" id="view-dashboard">
-        <div class="hero">
+        <div class="hero holo-hero">
           <div class="hero-copy">
-            <span class="hero-kicker"><i></i> Data Analyst Academy · learn by building</span>
-            <h1>Welcome to Data Analyst Academy</h1>
-            <p class="hero-sub">Deep lesson notes, narrated video walkthroughs, flashcards and timed mock interviews — one workspace from first spreadsheet to offer letter.</p>
-            <div class="hero-name">Shibu Sangma</div>
-            <div class="hero-tagline">Learn · Analyze · Build · Master</div>
+            <span class="hero-kicker"><i></i> Holographic learning command centre</span>
+            <h1 class="hero-title">
+              <span class="hero-eyebrow">Welcome to</span>
+              <span class="hero-metal">Shibu Sangma</span>
+              <span class="hero-platform">Data Analyst Academy</span>
+            </h1>
+            <p class="hero-sub">Deep lesson notes, narrated walkthroughs, flashcards, timed exams and mock interviews — one command centre from first spreadsheet to offer letter.</p>
+            <div class="hero-tagline">Learn. Analyze. Build. Master.</div>
             <div class="hero-actions">
               <button class="btn-hero" id="heroContinue" type="button">Continue learning <span class="arw">&rarr;</span></button>
-              <button class="btn-ghost-glass" id="heroPlan" type="button">Today's plan</button>
-              <button class="btn-ghost-glass" id="heroInterview" type="button">Mock interview</button>
+              <button class="btn-ghost-glass" id="heroExplore" type="button">Explore curriculum</button>
+            </div>
+            <div class="hero-kpis">
+              <div class="hero-kpi"><b id="heroKpiLessons">0/0</b><span>Lessons done</span></div>
+              <div class="hero-kpi"><b id="heroKpiStreak">0</b><span>Day streak</span></div>
+              <div class="hero-kpi"><b id="heroKpiQuiz">&mdash;</b><span>Quiz avg</span></div>
+              <div class="hero-kpi"><b id="heroKpiVideos">0/0</b><span>Videos</span></div>
             </div>
           </div>
-          <div class="hero-scene" id="heroScene" aria-hidden="true"></div>
-          <div class="hero-kpis">
-            <div class="hero-kpi"><b id="heroKpiLessons">0/0</b><span>Lessons done</span></div>
-            <div class="hero-kpi"><b id="heroKpiStreak">0</b><span>Day streak</span></div>
-            <div class="hero-kpi"><b id="heroKpiQuiz">&mdash;</b><span>Quiz avg</span></div>
-            <div class="hero-kpi"><b id="heroKpiVideos">0/0</b><span>Videos</span></div>
+          <div class="hero-stage">
+            <div class="hero-scene" id="heroScene" aria-hidden="true"></div>
+            <div class="hero-ring-card">
+              <div class="hero-ring" id="heroRing">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                  <circle class="hr-track" cx="60" cy="60" r="50"></circle>
+                  <circle class="hr-fill" id="heroRingFg" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <div class="hero-ring-label"><b id="heroRingPct">0%</b><span>complete</span></div>
+              </div>
+              <p class="hero-ring-caption">Data cube · SQL · Python · Excel · Power BI · Statistics · Visualisation</p>
+            </div>
           </div>
         </div>
         <div class="view-head">
@@ -117,7 +137,13 @@
             <div class="greet-badge" id="greetBadge" aria-hidden="true">S</div>
             <div class="greet-copy">
               <h1 class="greet-3d" id="greetTitle"><span class="greet-w">Good</span> <span class="greet-w">to</span> <span class="greet-w">see</span> <span class="greet-w">you</span> 👋</h1>
+              <p class="welcome-line">Your journey to becoming a professional Data Analyst continues.</p>
               <p class="muted" id="dashSubtitle">Your data analyst roadmap, all in one place.</p>
+              <div class="welcome-chips">
+                <span class="w-chip" id="wChipPct">0% complete</span>
+                <span class="w-chip" id="wChipStreak">0-day streak</span>
+                <span class="w-chip" id="wChipNext">Next: —</span>
+              </div>
             </div>
           </div>
           <button class="btn btn-primary" id="continueBtn">Continue learning →</button>
@@ -149,6 +175,18 @@
             <div class="stat-big" id="statQuiz">—</div>
             <p class="stat-title">Average quiz score</p>
             <p class="muted tiny" id="quizCountLabel">No quizzes taken yet</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-big" id="statReadiness">0<span class="small">%</span></div>
+            <p class="stat-title">Interview readiness</p>
+            <p class="muted tiny" id="readinessLabel">0 of 193 cards known</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-big" id="statHours">0<span class="small">h</span></div>
+            <p class="stat-title">Study hours</p>
+            <p class="muted tiny" id="hoursLabel">From completed lessons and videos</p>
           </div>
         </div>
 
@@ -402,6 +440,7 @@
 <script src="assets/app4.js?v=5"></script>
   <script src="assets/fx3d.js?v=2"></script>
   <script src="assets/vendor/three.min.js"></script>
-  <script src="assets/premium.js?v=1"></script>
+  <script src="assets/premium.js?v=2"></script>
+  <script src="assets/holo.js?v=1"></script>
 </body>
 </html>
