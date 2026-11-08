@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <radialGradient id="r" cx="50%" cy="42%" r="62%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".95"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity=".05"/>
+    </radialGradient>
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#22d3ee"/>
+      <stop offset=".6" stop-color="#111827"/><stop offset=".85" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <filter id="bl"><feGaussianBlur stdDeviation="46"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="#05060a"/>
+  <rect width="800" height="1000" fill="url(#r)" opacity=".16"/>
+<path d="M60 300 C 200 240, 300 380, 420 320 S 640 250, 740 300" fill="none" stroke="url(#g)" stroke-width="1.6" opacity="0.75"/><path d="M60 346 C 200 286, 300 426, 420 366 S 640 296, 740 346" fill="none" stroke="url(#g)" stroke-width="1.48" opacity="0.67"/><path d="M60 392 C 200 332, 300 472, 420 412 S 640 342, 740 392" fill="none" stroke="url(#g)" stroke-width="1.36" opacity="0.59"/><path d="M60 438 C 200 378, 300 518, 420 458 S 640 388, 740 438" fill="none" stroke="url(#g)" stroke-width="1.2400000000000002" opacity="0.51"/><path d="M60 484 C 200 424, 300 564, 420 504 S 640 434, 740 484" fill="none" stroke="url(#g)" stroke-width="1.12" opacity="0.43"/><path d="M60 530 C 200 470, 300 610, 420 550 S 640 480, 740 530" fill="none" stroke="url(#g)" stroke-width="1.0" opacity="0.35"/><path d="M60 576 C 200 516, 300 656, 420 596 S 640 526, 740 576" fill="none" stroke="url(#g)" stroke-width="0.8800000000000001" opacity="0.27"/><path d="M60 622 C 200 562, 300 702, 420 642 S 640 572, 740 622" fill="none" stroke="url(#g)" stroke-width="0.7600000000000001" opacity="0.18999999999999995"/><path d="M60 668 C 200 608, 300 748, 420 688 S 640 618, 740 668" fill="none" stroke="url(#g)" stroke-width="0.6400000000000001" opacity="0.10999999999999999"/><circle cx="400" cy="470" r="240" fill="url(#r)" opacity=".22" filter="url(#bl)"/>
+  <rect width="800" height="1000" fill="none" stroke="#22d3ee" stroke-opacity=".18"/>
+  <text x="60" y="940" font-family="Helvetica, Arial, sans-serif" font-size="20" letter-spacing="6" fill="#94a3b8">GLASS INTERFACE</text>
+</svg>
