@@ -7,6 +7,7 @@
 <meta name="description" content="Complete data analyst study dashboard: curriculum, narrated video lessons, interview prep and quizzes." />
 <link rel="stylesheet" href="assets/styles.css?v=5" />
     <link rel="stylesheet" href="assets/fx3d.css?v=3" />
+  <link rel="stylesheet" href="assets/premium.css?v=1" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
 </head>
 <body>
@@ -59,6 +60,15 @@
     </div>
   </aside>
 
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <linearGradient id="pgGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#22d3ee"></stop>
+        <stop offset="55%" stop-color="#6d5efc"></stop>
+        <stop offset="100%" stop-color="#a855f7"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
   <!-- ============ MAIN ============ -->
   <main class="main">
     <header class="topbar">
@@ -81,6 +91,27 @@
 
       <!-- DASHBOARD -->
       <section class="view" id="view-dashboard">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="hero-kicker"><i></i> Data Analyst Academy · learn by building</span>
+            <h1>Welcome to Data Analyst Academy</h1>
+            <p class="hero-sub">Deep lesson notes, narrated video walkthroughs, flashcards and timed mock interviews — one workspace from first spreadsheet to offer letter.</p>
+            <div class="hero-name">Shibu Sangma</div>
+            <div class="hero-tagline">Learn · Analyze · Build · Master</div>
+            <div class="hero-actions">
+              <button class="btn-hero" id="heroContinue" type="button">Continue learning <span class="arw">&rarr;</span></button>
+              <button class="btn-ghost-glass" id="heroPlan" type="button">Today's plan</button>
+              <button class="btn-ghost-glass" id="heroInterview" type="button">Mock interview</button>
+            </div>
+          </div>
+          <div class="hero-scene" id="heroScene" aria-hidden="true"></div>
+          <div class="hero-kpis">
+            <div class="hero-kpi"><b id="heroKpiLessons">0/0</b><span>Lessons done</span></div>
+            <div class="hero-kpi"><b id="heroKpiStreak">0</b><span>Day streak</span></div>
+            <div class="hero-kpi"><b id="heroKpiQuiz">&mdash;</b><span>Quiz avg</span></div>
+            <div class="hero-kpi"><b id="heroKpiVideos">0/0</b><span>Videos</span></div>
+          </div>
+        </div>
         <div class="view-head">
           <div class="greet-plate">
             <div class="greet-badge" id="greetBadge" aria-hidden="true">S</div>
@@ -118,6 +149,22 @@
             <div class="stat-big" id="statQuiz">—</div>
             <p class="stat-title">Average quiz score</p>
             <p class="muted tiny" id="quizCountLabel">No quizzes taken yet</p>
+          </div>
+        </div>
+
+        <div class="analytics-grid">
+          <div class="panel viz-panel">
+            <div class="viz-head"><h2>Progress by module</h2><span class="muted tiny">live from your checklist</span></div>
+            <div class="viz-stage" id="vizBars"></div>
+          </div>
+          <div class="panel viz-panel">
+            <div class="viz-head"><h2>Skill tracks</h2><span class="muted tiny">coverage</span></div>
+            <div class="donut-wrap">
+              <div class="donut-box" id="donutBox"></div>
+              <div class="legend" id="donutLegend"></div>
+            </div>
+            <div class="viz-head" style="margin:16px 0 8px"><h2>Learning curve</h2><span class="muted tiny">module by module</span></div>
+            <svg class="spark" id="vizSpark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
           </div>
         </div>
 
@@ -354,5 +401,7 @@
 <script src="assets/app3.js?v=5"></script>
 <script src="assets/app4.js?v=5"></script>
   <script src="assets/fx3d.js?v=2"></script>
+  <script src="assets/vendor/three.min.js"></script>
+  <script src="assets/premium.js?v=1"></script>
 </body>
 </html>
