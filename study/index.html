@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data Analyst Academy — Study Dashboard</title>
+<meta name="description" content="Complete data analyst study dashboard: curriculum, narrated video lessons, interview prep and quizzes." />
+<link rel="stylesheet" href="assets/styles.css?v=5" />
+    <link rel="stylesheet" href="assets/fx3d.css?v=3" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">DA</div>
+      <div class="brand-text">
+        <strong class="brand-3d">Data Analyst</strong>
+        <span class="brand-3d">Academy</span>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <a href="#dashboard" class="nav-item" data-view="dashboard">
+        <span class="ico">◧</span> Dashboard
+      </a>
+      <a href="#curriculum" class="nav-item" data-view="curriculum">
+        <span class="ico">▤</span> Curriculum
+      </a>
+      <a href="#videos" class="nav-item" data-view="videos">
+        <span class="ico">▶</span> Video Lessons
+      </a>
+      <a href="#sessions" class="nav-item" data-view="sessions">
+        <span class="ico">⏱</span> 20-Min Sessions
+      </a>
+      <a href="#interview" class="nav-item" data-view="interview">
+        <span class="ico">◈</span> Interview Prep
+      </a>
+      <a href="#quiz" class="nav-item" data-view="quiz">
+        <span class="ico">✓</span> Quizzes
+      </a>
+      <a href="#exams" class="nav-item" data-view="exams">
+        <span class="ico">🎓</span> Exams
+      </a>
+      <a href="#cheatsheets" class="nav-item" data-view="cheatsheets">
+        <span class="ico">⌘</span> Cheat Sheets
+      </a>
+      <a href="#roadmap" class="nav-item" data-view="roadmap">
+        <span class="ico">◷</span> 8-Week Plan
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="streak-chip" id="streakChip">🔥 <span id="streakDays">0</span>-day streak</div>
+      <button class="btn btn-ghost btn-block" id="resetBtn">Reset progress</button>
+      <p class="tiny">Built from GeeksforGeeks Data Analytics tutorial + Microsoft Learn Data Analyst career path.</p>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" id="menuBtn" aria-label="Menu">☰</button>
+      <div class="search-wrap">
+        <span class="search-ico">⌕</span>
+        <input id="globalSearch" type="search" placeholder="Search lessons, interview questions…" autocomplete="off" />
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="topbar-right">
+        <div class="pill" id="overallPill">0% complete</div>
+        <div class="profile-chip" id="profileChip" title="Shibu Sangma">
+          <span class="avatar" id="profileAvatar">SS</span>
+          <span class="profile-name" id="profileName">Shibu Sangma</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="view-container" id="viewContainer">
+
+      <!-- DASHBOARD -->
+      <section class="view" id="view-dashboard">
+        <div class="view-head">
+          <div class="greet-plate">
+            <div class="greet-badge" id="greetBadge" aria-hidden="true">S</div>
+            <div class="greet-copy">
+              <h1 class="greet-3d" id="greetTitle"><span class="greet-w">Good</span> <span class="greet-w">to</span> <span class="greet-w">see</span> <span class="greet-w">you</span> 👋</h1>
+              <p class="muted" id="dashSubtitle">Your data analyst roadmap, all in one place.</p>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="continueBtn">Continue learning →</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="ring" id="ringOverall">
+              <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fg" id="ringOverallFg" cx="60" cy="60" r="52"/></svg>
+              <div class="ring-label"><strong id="ringPct">0%</strong><span>complete</span></div>
+            </div>
+            <p class="stat-title">Course progress</p>
+            <p class="muted tiny" id="lessonsDoneLabel">0 / 0 lessons</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-big" id="statStreak">0</div>
+            <p class="stat-title">Day streak</p>
+            <p class="muted tiny">Study daily to keep it alive</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-big" id="statVideos">0<span class="small">/0</span></div>
+            <p class="stat-title">Video lessons watched</p>
+            <p class="muted tiny">Narrated deep-dives</p>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-big" id="statQuiz">—</div>
+            <p class="stat-title">Average quiz score</p>
+            <p class="muted tiny" id="quizCountLabel">No quizzes taken yet</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Module progress</h2>
+              <span class="muted tiny">Click a module to open it</span>
+            </div>
+            <div id="moduleBars" class="bars"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Today's plan</h2></div>
+            <div id="todayPlan" class="plan-list"></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel-head"><h2>Jump back in</h2></div>
+            <div id="recentList" class="recent-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Interview readiness</h2></div>
+            <div id="readiness"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURRICULUM -->
+      <section class="view" id="view-curriculum">
+        <div class="view-head">
+          <div>
+            <h1>Curriculum</h1>
+            <p class="muted">12 modules · from foundations to Power BI, capstone and interview mastery</p>
+          </div>
+          <div class="filter-row">
+            <select id="curFilter" class="select">
+              <option value="all">All tracks</option>
+              <option value="core">Core analysis</option>
+              <option value="python">Python</option>
+              <option value="sql">SQL</option>
+              <option value="stats">Statistics</option>
+              <option value="bi">BI &amp; tools</option>
+            </select>
+          </div>
+        </div>
+        <div id="moduleGrid" class="module-grid"></div>
+      </section>
+
+      <!-- LESSON READER -->
+      <section class="view" id="view-lesson">
+        <div class="reader">
+          <aside class="reader-nav">
+            <button class="btn btn-ghost btn-sm" id="backToModules">← All modules</button>
+            <h3 id="readerModuleTitle">Module</h3>
+            <ol id="readerLessonList" class="lesson-list"></ol>
+          </aside>
+          <article class="reader-body" id="readerBody"></article>
+        </div>
+      </section>
+
+      <!-- VIDEOS -->
+      <section class="view" id="view-videos">
+        <div class="view-head">
+          <div>
+            <h1>Video Lessons</h1>
+            <p class="muted">Narrated, slide-by-slide deep dives — press play and listen.</p>
+          </div>
+        </div>
+        <div class="video-layout">
+          <div class="player-panel">
+            <div class="player-stage" id="playerStage">
+              <div class="stage-scene" id="stageScene">
+                <div class="stage-kicker" id="stageKicker">Lesson</div>
+                <h2 id="stageTitle">Select a lesson to begin</h2>
+                <ul id="stageBullets" class="stage-bullets"></ul>
+                <div class="stage-viz" id="stageViz"></div>
+              </div>
+              <div class="stage-progress"><div class="stage-progress-fill" id="stageProgress"></div></div>
+            </div>
+            <div class="player-controls">
+              <button class="icon-btn" id="playBtn" title="Play / pause">▶</button>
+              <button class="icon-btn" id="prevScene" title="Previous slide">⏮</button>
+              <button class="icon-btn" id="nextScene" title="Next slide">⏭</button>
+              <div class="scene-dots" id="sceneDots"></div>
+              <span class="muted tiny" id="sceneLabel">0 / 0</span>
+              <label class="switch"><input type="checkbox" id="voiceToggle" checked><span>Voice</span></label>
+              <label class="switch"><input type="checkbox" id="autoToggle" checked><span>Auto-advance</span></label>
+            </div>
+            <div class="transcript" id="transcript"></div>
+          </div>
+          <div class="video-list-panel">
+            <h3>Lesson library</h3>
+            <div id="videoList"></div>
+          </div>
+        </div>
+
+        <div id="topicVideos"></div>
+
+        <div id="hindiTrack"></div>
+
+        <a class="yt-card" href="https://www.youtube.com/watch?v=5mCglA9CuSg" target="_blank" rel="noopener noreferrer">
+          <img class="yt-thumb" src="https://i.ytimg.com/vi/5mCglA9CuSg/hqdefault.jpg" alt="Data Analyst Full Course in 47 Hours — Simplilearn" loading="lazy">
+          <div class="yt-body">
+            <span class="tag tag-ghost">External · YouTube</span>
+            <h3>Data Analyst Full Course in 47 Hours — Simplilearn</h3>
+            <p class="muted">Long-form companion to this syllabus: a continuous walkthrough of Excel, SQL, Python, statistics and Power BI. Best used on revision days or when you want a second explanation of a module already read here.</p>
+            <span class="yt-cta">Watch on YouTube ↗</span>
+          </div>
+        </a>
+      </section>
+
+      <!-- SESSIONS -->
+      <section class="view" id="view-sessions">
+        <div class="view-head">
+          <div>
+            <h1>20-Minute Study Sessions</h1>
+            <p class="muted">One block at a time: watch, read, recall. The 47-hour course, chunked into sessions you can actually finish.</p>
+          </div>
+        </div>
+        <div id="sessionApp"></div>
+      </section>
+
+      <!-- INTERVIEW -->
+      <section class="view" id="view-interview">
+        <div class="view-head">
+          <div>
+            <h1>Interview Prep</h1>
+            <p class="muted">Flashcards + mock interviews. Aim for 80% known before applying.</p>
+          </div>
+          <button class="btn btn-primary" id="startMockBtn">Start mock interview</button>
+        </div>
+        <div class="filter-row" id="interviewFilters"></div>
+        <div class="interview-layout">
+          <div class="panel flashcard-panel">
+            <div class="flashcard" id="flashcard">
+              <div class="flashcard-meta">
+                <span class="tag" id="fcTopic">Topic</span>
+                <span class="tag tag-ghost" id="fcLevel">Level</span>
+              </div>
+              <p class="flashcard-q" id="fcQuestion">Loading…</p>
+              <div class="flashcard-a" id="fcAnswer"></div>
+              <button class="btn btn-ghost btn-sm" id="fcReveal">Show answer</button>
+            </div>
+            <div class="flashcard-actions">
+              <button class="btn btn-ghost" id="fcPrev">← Prev</button>
+              <span class="muted tiny" id="fcCounter">0 / 0</span>
+              <button class="btn btn-ghost" id="fcNext">Next →</button>
+            </div>
+            <div class="flashcard-mark">
+              <button class="btn btn-warn" id="fcReview">↻ Need review</button>
+              <button class="btn btn-ok" id="fcKnown">✓ I know this</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Mastery by topic</h2></div>
+            <div id="masteryList" class="mastery-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="view" id="view-quiz">
+        <div class="view-head">
+          <div>
+            <h1>Quizzes</h1>
+            <p class="muted">Check understanding after each module.</p>
+          </div>
+        </div>
+        <div id="quizPicker" class="module-grid"></div>
+        <div id="quizRunner" class="quiz-runner hidden"></div>
+      </section>
+
+      <!-- CHEAT SHEETS -->
+      <section class="view" id="view-exams">
+        <div class="view-head">
+          <div>
+            <h1>Exams</h1>
+            <p class="muted">Timed papers for SQL, Excel, Power BI and Python — topic syllabus, no feedback until you submit, full answer review after.</p>
+          </div>
+        </div>
+        <div id="examApp"></div>
+      </section>
+
+      <section class="view" id="view-cheatsheets">
+        <div class="view-head">
+          <div><h1>Cheat Sheets</h1><p class="muted">High-density reference for interviews and daily work.</p></div>
+        </div>
+        <div class="tabs" id="cheatTabs"></div>
+        <div id="cheatBody" class="cheat-body"></div>
+      </section>
+
+      <!-- ROADMAP -->
+      <section class="view" id="view-roadmap">
+        <div class="view-head">
+          <div><h1>8-Week Study Plan</h1><p class="muted">2 hours a day, 5 days a week. Tick weeks off as you go.</p></div>
+        </div>
+        <div id="roadmapList" class="roadmap"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data/curriculum.js"></script>
+<script src="data/curriculum2.js"></script>
+<script src="data/curriculum3.js"></script>
+<script src="data/curriculum4.js"></script>
+<script src="data/curriculum5.js"></script>
+<script src="data/curriculum6.js"></script>
+<script src="data/roadmap.js"></script>
+<script src="data/videos.js"></script>
+<script src="data/videos2.js"></script>
+<script src="data/deep5.js"></script>
+<script src="data/deep4.js"></script>
+<script src="data/deep3.js"></script>
+<script src="data/deep2.js"></script>
+<script src="data/deep1.js"></script>
+<script src="data/interview.js"></script>
+<script src="data/interview2.js"></script>
+<script src="data/interview3.js"></script>
+<script src="data/topicvideos.js"></script>
+<script src="data/hindi.js"></script>
+<script src="data/cheatsheets.js"></script>
+<script src="data/quizzes.js"></script>
+<script src="data/exams1.js"></script>
+<script src="data/exams2.js"></script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/app2.js?v=5"></script>
+<script src="assets/app3.js?v=5"></script>
+<script src="assets/app4.js?v=5"></script>
+  <script src="assets/fx3d.js?v=2"></script>
+</body>
+</html>
