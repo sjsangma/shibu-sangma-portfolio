@@ -132,10 +132,14 @@
   /* ---------------- routing ---------------- */
   const views = ["dashboard", "curriculum", "lesson", "videos", "sessions", "interview", "quiz", "exams", "cheatsheets", "roadmap"];
 
-  function go(view, opts) {
-    if (!views.includes(view)) view = "dashboard";
+  function go(route, opts) {
+    const raw = String(route || "dashboard");
+    const base = raw.split("?")[0].split("/")[0];
+    const platform = (window.Platform && window.Platform.views) || [];
+    const known = views.includes(base) || platform.includes(base);
+    const view = known ? base : "dashboard";
     $$(".view").forEach((v) => v.classList.toggle("active", v.id === "view-" + view));
-    $$(".nav-item").forEach((a) => a.classList.toggle("active", a.dataset.view === view));
+    $$(".nav-item").forEach((a) => a.classList.toggle("active", (a.dataset.view || "") === base || (a.dataset.view || "") === view));
     $("#sidebar").classList.remove("open");
     state.lastView = view;
     save();
@@ -149,8 +153,9 @@
     if (view === "exams") window.DAA && window.DAA.renderExams && window.DAA.renderExams();
     if (view === "cheatsheets") window.DAA && window.DAA.renderCheats && window.DAA.renderCheats();
     if (view === "roadmap") window.DAA && window.DAA.renderRoadmap && window.DAA.renderRoadmap();
+    if (platform.includes(base) && window.Platform) window.Platform.render(base, raw);
     if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: "instant" in window ? "auto" : "auto" });
-    if (location.hash !== "#" + view) history.replaceState(null, "", "#" + view);
+    if (location.hash !== "#" + raw) history.replaceState(null, "", "#" + raw);
     window.DAA.state = state;
   }
 

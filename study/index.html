@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/fx3d.css?v=3" />
   <link rel="stylesheet" href="assets/premium.css?v=1" />
   <link rel="stylesheet" href="assets/holo.css?v=1" />
+  <link rel="stylesheet" href="assets/platform.css?v=3" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
 </head>
 <body>
@@ -31,6 +32,12 @@
       <a href="#curriculum" class="nav-item" data-view="curriculum">
         <span class="ico">▤</span> Curriculum
       </a>
+      <a href="#mycourses" class="nav-item" data-view="mycourses">
+        <span class="ico">▣</span> My Courses
+      </a>
+      <a href="#library" class="nav-item" data-view="library">
+        <span class="ico">▥</span> Course Library
+      </a>
       <a href="#videos" class="nav-item" data-view="videos">
         <span class="ico">▶</span> Video Lessons
       </a>
@@ -39,6 +46,15 @@
       </a>
       <a href="#interview" class="nav-item" data-view="interview">
         <span class="ico">◈</span> Interview Preparation
+      </a>
+      <a href="#assistant" class="nav-item" data-view="assistant">
+        <span class="ico">✦</span> AI Study Assistant
+      </a>
+      <a href="#notes" class="nav-item" data-view="notes">
+        <span class="ico">✎</span> Notes &amp; Bookmarks
+      </a>
+      <a href="#analytics" class="nav-item" data-view="analytics">
+        <span class="ico">◔</span> Analytics
       </a>
       <a href="#quiz" class="nav-item" data-view="quiz">
         <span class="ico">✓</span> Quizzes
@@ -51,6 +67,12 @@
       </a>
       <a href="#roadmap" class="nav-item" data-view="roadmap">
         <span class="ico">◷</span> 8-Week Study Plan
+      </a>
+      <a href="#admin" class="nav-item" data-view="admin">
+        <span class="ico">⛭</span> Course Studio
+      </a>
+      <a href="#settings" class="nav-item" data-view="settings">
+        <span class="ico">⚙</span> Settings
       </a>
     </nav>
 
@@ -405,6 +427,30 @@
         <div id="roadmapList" class="roadmap"></div>
       </section>
 
+      <!-- PLATFORM: COURSE LIBRARY -->
+      <section class="view" id="view-library"><div class="plat" id="platLibrary"></div></section>
+
+      <!-- PLATFORM: MY COURSES -->
+      <section class="view" id="view-mycourses"><div class="plat" id="platMyCourses"></div></section>
+
+      <!-- PLATFORM: COURSE DETAIL / PLAYER -->
+      <section class="view" id="view-course"><div class="plat" id="platCourse"></div></section>
+
+      <!-- PLATFORM: AI ASSISTANT -->
+      <section class="view" id="view-assistant"><div class="plat" id="platAssistant"></div></section>
+
+      <!-- PLATFORM: NOTES & BOOKMARKS -->
+      <section class="view" id="view-notes"><div class="plat" id="platNotes"></div></section>
+
+      <!-- PLATFORM: ANALYTICS -->
+      <section class="view" id="view-analytics"><div class="plat" id="platAnalytics"></div></section>
+
+      <!-- PLATFORM: COURSE STUDIO (ADMIN) -->
+      <section class="view" id="view-admin"><div class="plat" id="platAdmin"></div></section>
+
+      <!-- PLATFORM: SETTINGS -->
+      <section class="view" id="view-settings"><div class="plat" id="platSettings"></div></section>
+
     </div>
   </main>
 </div>
@@ -442,5 +488,6 @@
   <script src="assets/vendor/three.min.js"></script>
   <script src="assets/premium.js?v=2"></script>
   <script src="assets/holo.js?v=1"></script>
+  <script src="assets/platform.js?v=1"></script>
 </body>
 </html>
