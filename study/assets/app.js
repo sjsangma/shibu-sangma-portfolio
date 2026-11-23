@@ -64,36 +64,7 @@
     try { return localStorage.getItem("daa:name") || "Shibu Sangma"; } catch (e) { return "Shibu Sangma"; }
   })();
 
-  function salutation(hour) {
-    if (hour < 5) return { text: "Still up", icon: "🌙" };
-    if (hour < 12) return { text: "Good morning", icon: "☀️" };
-    if (hour < 17) return { text: "Good afternoon", icon: "🌤️" };
-    if (hour < 22) return { text: "Good evening", icon: "🌇" };
-    return { text: "Good night", icon: "🌙" };
-  }
-
-  function isReturning() {
-    const t = todayKey();
-    return state.days.some((d) => d !== t);
-  }
-
-  function greetingFor(hour, returning) {
-    if (returning) return "Welcome back, " + USER_NAME + " 👋";
-    const s = salutation(hour);
-    return s.text + ", " + USER_NAME + " " + s.icon;
-  }
-
   function applyGreeting() {
-    const title = $("#greetTitle");
-    if (!title) return;
-    const words = greetingFor(new Date().getHours(), isReturning()).split(" ");
-    title.innerHTML = words
-      .map((w, i) => `<span class="greet-w" style="animation-delay:${i * 80}ms">${esc(w)}</span>`)
-      .join(" ");
-    title.classList.remove("replay");
-    void title.offsetWidth;
-    title.classList.add("replay");
-
     const initials = USER_NAME.trim().split(/\s+/).slice(0, 2).map((w) => (w[0] || "").toUpperCase()).join("") || "D";
 
     const badge = $("#greetBadge");
@@ -424,7 +395,7 @@
     CURRICULUM, VIDEOS, INTERVIEW, QUIZZES, CHEATSHEETS, ROADMAP,
     MODULE_BY_ID, ALL_LESSONS, state, save, go, toast, esc, pct, touchDay, streak,
     openLesson, openModule, renderDashboard, renderCurriculum, totalLessons, totalDone,
-    greetingFor, applyGreeting, USER_NAME
+    applyGreeting, USER_NAME
   });
 
   (window.DAA.refreshAll = function () {

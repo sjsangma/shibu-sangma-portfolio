@@ -561,32 +561,7 @@ dialog,
 
 .greet-copy { min-width: 0; }
 
-.greet-3d {
-  margin: 0 0 6px;
-  font-size: clamp(22px, 2.4vw, 32px);
-  letter-spacing: -.02em;
-  color: #f4f6ff;
-  line-height: 1.15;
-  transform-style: preserve-3d;
-  text-shadow: 0 1px 0 #4b3fbd,
-               0 2px 0 #3f34a4,
-               0 3px 0 #332a85,
-               0 4px 0 #2a226d,
-               0 5px 1px rgba(0, 0, 0, .35),
-               0 14px 26px rgba(0, 0, 0, .55);
-}
-.greet-3d .greet-w {
-  display: inline-block;
-  transform-origin: 50% 100%;
-  animation: greetPop .6s cubic-bezier(.2, .9, .25, 1) both;
-  will-change: transform, opacity;
-}
-@keyframes greetPop {
-  from { opacity: 0; transform: translate3d(0, 16px, -60px) rotateX(-42deg) scale(.94); }
-  to   { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg) scale(1); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .greet-3d .greet-w { animation: none; }
   .greet-badge { animation: none; }
 }
 
