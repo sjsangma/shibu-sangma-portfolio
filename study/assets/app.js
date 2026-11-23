@@ -77,11 +77,41 @@
 
     const sub = $("#dashSubtitle");
     if (sub) {
-      const today = new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
-      sub.textContent = totalDone()
-        ? `${today} · ${streak()}-day streak · ${pct(totalDone(), totalLessons)}% of the roadmap done`
-        : `${today} · 12 modules, 68 lessons — start with module 1 and keep the streak alive`;
+      const d = new Date();
+      const today = d.toLocaleDateString(undefined, { weekday: "long" }) + ", " +
+        d.getDate() + " " + d.toLocaleDateString(undefined, { month: "long" }) + " " + d.getFullYear();
+      sub.textContent = "Today · " + today;
     }
+
+    paintStudyNotif();
+  }
+
+  function paintStudyNotif() {
+    const el = $("#studyNotif");
+    if (!el) return;
+    const done = totalDone();
+    const left = Math.max(0, totalLessons - done);
+    const vids = videosWatched();
+    const quizzes = Object.keys(state.quiz || {}).length;
+    const exams = Object.keys(state.exams || {}).length;
+    const st = streak();
+
+    const head = done >= totalLessons
+      ? "You have completed all " + totalLessons + " lessons"
+      : "You have completed " + done + " of " + totalLessons + " lessons";
+
+    const bits = [];
+    if (done) {
+      if (left) bits.push(left + (left === 1 ? " lesson to go" : " lessons to go"));
+      if (vids) bits.push(vids + (vids === 1 ? " video watched" : " videos watched"));
+      if (quizzes) bits.push(quizzes + (quizzes === 1 ? " quiz taken" : " quizzes taken"));
+      if (exams) bits.push(exams + (exams === 1 ? " exam taken" : " exams taken"));
+      if (st > 1) bits.push(st + "-day streak");
+    } else {
+      bits.push("Start with module 1 — " + left + " lessons to go");
+    }
+
+    el.innerHTML = "<strong>" + esc(head) + '</strong><span class="sn-meta">' + esc(bits.join(" · ")) + "</span>";
   }
 
   function toast(msg) {
@@ -395,7 +425,7 @@
     CURRICULUM, VIDEOS, INTERVIEW, QUIZZES, CHEATSHEETS, ROADMAP,
     MODULE_BY_ID, ALL_LESSONS, state, save, go, toast, esc, pct, touchDay, streak,
     openLesson, openModule, renderDashboard, renderCurriculum, totalLessons, totalDone,
-    applyGreeting, USER_NAME
+    applyGreeting, paintStudyNotif, USER_NAME
   });
 
   (window.DAA.refreshAll = function () {
